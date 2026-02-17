@@ -1,0 +1,22 @@
+Base path:	Sample name:	Section name	User ID
+	TAM-3A-4-5CDE-RUN2	TAM-3A-4-5CDE-RUN2-E	
+Year	Month	Day	Time
+2026	01	22	12
+Voltage	40	kV	
+Current	10	mA	
+Exposure time	0	ms	
+line camera signal level	22242	at 25 ms	
+Step size	3000	microns	
+XRF	ON		
+XRF exp. time	10	seconds	
+Start coordinate	1384.0	Stop coordinate	1441.0
+XRF voltage and current	30	  	55
+Tube	Mo		
+Optical Start	-0.7	Optical End	1492.4
+Step size	0.188	microns	
+Start temperature		°C	
+Start humidity		%	
+Start vacuum	-95.4	kPa	
+Stop temperature		°C	
+Stop humidity		%	
+Stop vacuum		kPa	

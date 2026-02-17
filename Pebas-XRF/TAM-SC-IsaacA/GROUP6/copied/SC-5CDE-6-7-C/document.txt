@@ -1,0 +1,22 @@
+Base path:	Sample name:	Section name	User ID
+	SC-567	SC-567-C	
+Year	Month	Day	Time
+2026	01	20	18
+Voltage	40	kV	
+Current	10	mA	
+Exposure time	0	ms	
+line camera signal level	22159	at 25 ms	
+Step size	3000	microns	
+XRF	ON		
+XRF exp. time	10	seconds	
+Start coordinate	776.0	Stop coordinate	879.0
+XRF voltage and current	30	  	55
+Tube	Mo		
+Optical Start	-0.7	Optical End	1182.2
+Step size	0.188	microns	
+Start temperature		°C	
+Start humidity		%	
+Start vacuum	-95.3	kPa	
+Stop temperature		°C	
+Stop humidity		%	
+Stop vacuum		kPa	
