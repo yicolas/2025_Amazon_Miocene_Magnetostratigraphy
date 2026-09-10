@@ -99,6 +99,16 @@ XRF (Fe/Ti for magnetic minerals; clay/detrital proxies) would pin the lithology
 
 ## Log
 
+- 2026-09-10 — **Discussion reframed to Hoorn mega-wetland (Everglades analog).** Recast the marine
+  signal as episodic/subordinate against a dominantly freshwater-to-oligohaline background (endemic
+  mollusc fauna = long-lived freshwater body); pyrite/Ca beds = brief brackish ingressions +
+  condensation-favoured pyritisation. New subsection "Sedimentation rate, paleoclimate, and the road
+  to the modern Amazon": ~7.8 m/Myr (both sites) is EXPECTED for a low-gradient sediment-starved
+  mega-wetland (not anomalously low), consistent with tens of m/Myr regional Pebas/Solimoes; full-
+  C5AAr forcing would need implausible ~2.4 m/Myr -> condensed record w/ minor diastems. Added lake-
+  wetland -> transcontinental-Amazon arc (fan onset ~11-9.4 Ma). New refs Figueiredo et al. 2009,
+  Hoorn et al. 2017. Rebuilt docx/pdf (15 pp). Commit follows 55fa188.
+
 - 2026-09-10 — **Discussion + Results written; XRF paleoenvironment.** Added full Discussion
   (four-way age convergence on C5AAr ~13.2–13.4 Ma; magnetic mineralogy & reductive-diagenetic
   overprinting — XRF total Fe is authigenic, not detrital magnetite, so it cannot proxy magnetic
