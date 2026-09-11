@@ -99,6 +99,15 @@ XRF (Fe/Ti for magnetic minerals; clay/detrital proxies) would pin the lithology
 
 ## Log
 
+- 2026-09-11 — **Sedimentology & stratigraphy section added (derived from Hoorn).** New \\section
+  before Methods: stratigraphic framework (Pebas = Solimoes/Curaray; overlies pre-Pebas fluvial,
+  passes up into fluvial Nauta; palyno-zoned T-15/T-16); lithofacies per Hoorn 1993/1994 (dominant
+  blue-grey lacustrine mudstone = the u-channel facies; lignites/mires; endemic-mollusc shell beds;
+  tidal heteroliths — flaser/wavy/lenticular, mud drapes, rhythmites, reactivation, herringbone;
+  siderite/pyrite + Teredolites); Lake Pebas depositional model + parasequence/flooding cyclicity;
+  and how TAM/SC (planar ~0-3 deg bedding, mudstone core) sit in it. New refs Hoorn 1993, Hoorn 1994,
+  Wesselingh et al. 2002 (Lake Pebas). Rebuilt docx/pdf (17 pp).
+
 - 2026-09-10 — **Discussion reframed to Hoorn mega-wetland (Everglades analog).** Recast the marine
   signal as episodic/subordinate against a dominantly freshwater-to-oligohaline background (endemic
   mollusc fauna = long-lived freshwater body); pyrite/Ca beds = brief brackish ingressions +
