@@ -1,0 +1,9 @@
+# Mac / Python clutter
+.DS_Store
+__pycache__/
+# Too large for GitHub (>100 MB) - keep locally / on Drive
+CT/Output/*/stack_16bit.tif
+OSU_uchannel_magnetometer_NRM_data/7. Data Processing .docx
+# Notebook backups
+*.bak_before_append
+Uchannel_notebook_backup_*.ipynb

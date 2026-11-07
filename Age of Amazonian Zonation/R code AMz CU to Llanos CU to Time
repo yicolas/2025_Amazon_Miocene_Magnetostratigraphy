@@ -1,0 +1,72 @@
+setwd("~/PaleoColombia Dropbox/carlos Jaramillo/G4/papers/2024 Palynology Amazonia Zonation/Age of Amazonian Zonation")
+# code to calculate Amazonia CU into Llanos CU, and then from Llanos CU into geological # time
+
+## 1. Amazonia CU
+##1.1.  Amazonia into Composite Units.  Code to transfer Amazonia composite values into ##Llanos composite values.  Amazonia values in first column
+locMolino<-read.table("Amazonia_Llanos_Dec21_2023.txt",header=T,sep="\t",na.strings = "NA")##contains the calibration points, in first column goes Llanos
+locMolino = locMolino[order(locMolino$Amz),]##DUC Amazonia ordered from young to old
+
+##Loops that will produce all intercepts and coeff for calibration
+intercept.molino <- numeric (nrow(locMolino)-1) 
+slope.molino <- numeric (nrow(locMolino)-1) 
+for (i in (1:(nrow(locMolino)-1))) {
+segcal.molino=lm(locMolino$Llanos[i:(i+1)]~locMolino$Amz[i:(i+1)])## need to change, first independent
+intercept.molino[i]=segcal.molino$coefficients[1]
+slope.molino[i]=segcal.molino$coefficients[2]  
+} 
+
+calibfun.molino=function(a,b) {  ##lm for any given segment, a is tausa, b is segment to use
+c=a*slope.molino[b]+ intercept.molino[b]
+c
+}
+
+slopesegmentfun.molino=function(b) {  
+a=numeric (nrow(locMolino)-1)
+segment=numeric(1)
+for (i in (1:(nrow(locMolino)-1))) {
+a[i]=ifelse(b>=locMolino[i,1] & b<locMolino[(i+1),1],which(locMolino == locMolino[i,1]),0)##gives back the segment number
+segment=which (a >0)
+}
+segment
+}
+
+molinoforcomposite=read.table("Amz_UnknownDUC.txt",header=F,sep="\t",na.strings = "NA")#the DUC of Amazonia that we need to translate into Llanos composite units
+molinoforcomposite=as.matrix(molinoforcomposite)
+segmenttouse.molino=as.numeric(apply(molinoforcomposite,1,slopesegmentfun.molino))
+saltTOmedina=calibfun.molino(molinoforcomposite, segmenttouse.molino)#Amz in composite units
+
+
+##1.2.  LLanos Composite Units into Geological Time
+calibration<-read.table("calibration_2021_April.txt",header=T,sep="\t",na.strings = "NA")##contains the calibration points of Jaramillo et al 2011 Zonation
+calibration = calibration[order(calibration $CU),]##composite units ordered from young to old
+
+
+##Loops that will produce all intercepts and coeff for calibration
+intercept <- numeric (nrow(calibration)-1) 
+slope <- numeric (nrow(calibration)-1) 
+for (i in (1:(nrow(calibration)-1))) {
+segcal=lm(calibration$time[i:(i+1)]~calibration$CU[i:(i+1)])
+intercept[i]=segcal$coefficients[1]
+slope[i]=segcal$coefficients[2]  
+}     
+
+calibfun=function(a,b) {  ##lm for any given segment, a is composite unit, b is segment to use
+c=a*slope[b]+ intercept[b]
+c
+}
+
+##function that gives back the segment number
+slopesegmentfun=function(b) {  
+a=numeric (nrow(calibration)-1)
+segment=numeric(1)
+for (i in (1:(nrow(calibration)-1))) {
+a[i]=ifelse(b>=calibration[i,1] & b<calibration[(i+1),1],which(calibration == calibration[i,1]),0)##gives back the segment number
+segment=which (a >0)
+}
+segment
+}
+
+segmenttouse=as.numeric(apply(saltTOmedina,1,slopesegmentfun))## apply to find the segment for each composite unit, eg.
+timeunits=round(calibfun(saltTOmedina, segmenttouse),3)##calculate the time for each composite unit
+write.table(timeunits, file = "Amazonia_timeunits.csv", sep = ",", col.names = FALSE, qmethod = "double", row.name=FALSE,quote=FALSE)#export table with Ages
+

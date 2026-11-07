@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sea Level Inundation &amp; Flexural Basin Model — Amazon to Madre de Dios</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#faf9f7;--bg2:#f2f0ec;--bg3:#e8e6e1;
+--tx:#1a1a18;--tx2:#6b6a65;--tx3:#9c9a92;
+--bd:#d8d6cf;--bd2:#c2c0b6;
+--blue:#2563eb;--blue-l:#dbeafe;--blue-d:#1e40af;
+--teal:#0d9488;--teal-l:#ccfbf1;--teal-d:#115e59;
+--coral:#dc2626;--coral-l:#fee2e2;--coral-d:#991b1b;
+--amber:#d97706;--amber-l:#fef3c7;--amber-d:#92400e;
+--font:'IBM Plex Sans',system-ui,sans-serif;
+--mono:'IBM Plex Mono',monospace;
+--serif:'IBM Plex Serif',Georgia,serif;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--tx);line-height:1.5;font-size:14px}
+.wrap{max-width:960px;margin:0 auto;padding:32px 24px}
+h1{font-size:22px;font-weight:600;margin:0 0 4px;letter-spacing:-0.3px}
+.sub{font-size:13px;color:var(--tx2);margin:0 0 32px}
+h2{font-size:15px;font-weight:600;margin:0 0 16px;text-transform:uppercase;letter-spacing:0.8px;color:var(--tx2)}
+h3{font-size:14px;font-weight:600;margin:0 0 12px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px}
+
+.panel{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:20px;margin:0 0 24px}
+.panel.accent-blue{border-left:3px solid var(--blue)}
+.panel.accent-teal{border-left:3px solid var(--teal)}
+.panel.accent-coral{border-left:3px solid var(--coral)}
+.panel.accent-purple{border-left:3px solid #7c3aed}
+.stat.match .val{color:var(--teal-d)}
+.stat.miss .val{color:var(--coral-d)}
+
+.field{margin:0 0 14px}
+.field:last-child{margin:0}
+.field label{display:block;font-size:12px;color:var(--tx2);margin:0 0 4px;font-weight:500}
+.field input[type=number]{width:100%;height:34px;border:1px solid var(--bd);border-radius:6px;padding:0 10px;font-family:var(--mono);font-size:13px;background:var(--bg);color:var(--tx);outline:none;transition:border-color .15s}
+.field input:focus{border-color:var(--blue)}
+.field .unit{font-size:11px;color:var(--tx3);margin-top:2px}
+.field-row{display:flex;gap:8px;align-items:flex-end}
+.field-row .field{flex:1}
+
+.slider-row{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+.slider-row label{font-size:12px;color:var(--tx2);min-width:100px;font-weight:500}
+.slider-row input[type=range]{flex:1;accent-color:var(--blue)}
+.slider-row .out{font-family:var(--mono);font-size:14px;font-weight:500;min-width:64px;text-align:right}
+
+.stat{background:var(--bg2);border-radius:8px;padding:12px 14px}
+.stat .lbl{font-size:11px;color:var(--tx2);margin:0 0 2px;text-transform:uppercase;letter-spacing:0.5px}
+.stat .val{font-size:20px;font-weight:600;margin:0;font-family:var(--mono)}
+.stat .note{font-size:11px;color:var(--tx3);margin:2px 0 0}
+.stat.yes .val{color:var(--teal-d)}
+.stat.no .val{color:var(--coral-d)}
+
+.eq{font-family:var(--serif);font-size:16px;text-align:center;padding:14px 0;line-height:2;color:var(--tx)}
+.eq .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px}
+.eq .frac .n{border-bottom:1.5px solid var(--tx);padding:0 4px 2px;font-size:14px;line-height:1.2}
+.eq .frac .d{padding:2px 4px 0;font-size:14px;line-height:1.2}
+.eq sub{font-size:11px}
+
+.seg-table{width:100%;border-collapse:collapse;font-size:13px}
+.seg-table th{text-align:left;font-size:11px;color:var(--tx2);font-weight:500;text-transform:uppercase;letter-spacing:0.5px;padding:0 8px 8px;border-bottom:1px solid var(--bd)}
+.seg-table td{padding:8px;border-bottom:1px solid var(--bg2);vertical-align:middle}
+.seg-table input[type=number]{width:72px;height:28px;border:1px solid var(--bd);border-radius:4px;padding:0 6px;font-family:var(--mono);font-size:12px;background:var(--bg);text-align:right}
+.seg-table .slope-val{font-family:var(--mono);font-size:12px;font-weight:500}
+.seg-table .bar{height:14px;border-radius:3px;transition:width .3s}
+.seg-table .bar-cell{width:140px}
+.seg-table .bar-wrap{background:var(--bg2);border-radius:3px;height:14px;overflow:hidden}
+
+canvas{display:block;width:100%;margin:0}
+.chart-box{position:relative;background:#fff;border:1px solid var(--bd);border-radius:10px;padding:16px;margin:0 0 24px}
+.chart-legend{display:flex;gap:20px;margin:8px 0 0;font-size:12px;color:var(--tx2)}
+.chart-legend .dot{display:inline-block;width:12px;height:3px;border-radius:2px;vertical-align:middle;margin-right:4px}
+
+.ice-table{width:100%;border-collapse:collapse;font-size:13px;margin:0 0 12px}
+.ice-table th{text-align:left;font-size:11px;color:var(--tx2);font-weight:500;padding:0 8px 6px;border-bottom:1px solid var(--bd)}
+.ice-table td{padding:5px 8px;border-bottom:1px solid var(--bg2)}
+.ice-table .r{text-align:right;font-family:var(--mono);font-weight:500}
+.ice-table .bar-td{width:120px}
+.ice-table .ib{height:10px;border-radius:2px}
+.ice-total{display:flex;justify-content:space-between;padding:10px 8px;border-top:2px solid var(--tx);font-weight:600}
+.ice-total .num{font-family:var(--mono);font-size:18px}
+
+.divider{border:none;border-top:1px solid var(--bd);margin:32px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Sea level inundation model</h1>
+<p class="sub">Atlantic → Amazon → Madre de Dios, Peru. Inundation models (§1–7) and foreland flexural basin model (§8) with full parameter control.</p>
+
+<div class="grid2">
+<div>
+<h2>1. Global ice budget</h2>
+<div class="panel accent-blue">
+<table class="ice-table">
+<tr><th>Ice source</th><th>Volume (10⁶ km³)</th><th class="bar-td"></th><th class="r">SLE (m)</th></tr>
+<tr><td>East Antarctic Ice Sheet</td><td class="r">21.7</td><td class="bar-td"><div style="background:var(--bg2);border-radius:2px;height:10px;overflow:hidden"><div class="ib" style="width:92%;background:var(--blue)"></div></div></td><td class="r">53.3</td></tr>
+<tr><td>West Antarctic Ice Sheet</td><td class="r">3.3</td><td class="bar-td"><div style="background:var(--bg2);border-radius:2px;height:10px;overflow:hidden"><div class="ib" style="width:7.4%;background:var(--blue)"></div></div></td><td class="r">4.3</td></tr>
+<tr><td>Antarctic Peninsula</td><td class="r">0.1</td><td class="bar-td"><div style="background:var(--bg2);border-radius:2px;height:10px;overflow:hidden"><div class="ib" style="width:0.4%;background:var(--blue)"></div></div></td><td class="r">0.2</td></tr>
+<tr><td>Greenland Ice Sheet</td><td class="r">2.9</td><td class="bar-td"><div style="background:var(--bg2);border-radius:2px;height:10px;overflow:hidden"><div class="ib" style="width:12.8%;background:var(--teal)"></div></div></td><td class="r">7.4</td></tr>
+<tr><td>Glaciers &amp; ice caps</td><td class="r">0.16</td><td class="bar-td"><div style="background:var(--bg2);border-radius:2px;height:10px;overflow:hidden"><div class="ib" style="width:0.6%;background:var(--amber)"></div></div></td><td class="r">0.3</td></tr>
+<tr><td>Thermal expansion</td><td class="r">—</td><td class="bar-td"><div style="background:var(--bg2);border-radius:2px;height:10px;overflow:hidden"><div class="ib" style="width:3.4%;background:var(--coral)"></div></div></td><td class="r">~2.0</td></tr>
+</table>
+<div class="ice-total"><span>Total if all ice melts</span><span class="num">~67.5 m</span></div>
+</div>
+
+<h2>2. Equations</h2>
+<div class="panel">
+<h3>Sea level equivalent</h3>
+<div class="eq">SLE = <span class="frac"><span class="n">V<sub>ice</sub> × ρ<sub>ice</sub></span><span class="d">A<sub>ocean</sub> × ρ<sub>sw</sub></span></span> − <span class="frac"><span class="n">V<sub>below SL</sub></span><span class="d">A<sub>ocean</sub></span></span></div>
+</div>
+<div class="panel">
+<h3>Linear inundation reach</h3>
+<div class="eq">x<sub>reach</sub> = <span class="frac"><span class="n">ΔSL × L</span><span class="d">h<sub>target</sub></span></span> = <span class="frac"><span class="n">ΔSL</span><span class="d">S<sub>linear</sub></span></span></div>
+</div>
+<div class="panel">
+<h3>Concave (piecewise) inundation</h3>
+<div class="eq">x<sub>reach</sub> = max { d : e(d) ≤ ΔSL }</div>
+<p style="font-size:12px;color:var(--tx2);margin-top:6px">Where e(d) is the piecewise-linear elevation profile interpolated between control points. Sea penetrates to the farthest point where river bed elevation ≤ sea level.</p>
+</div>
+<div class="panel">
+<h3>Required post-depositional uplift</h3>
+<div class="eq">U = h<sub>modern</sub> − ΔSL<sub>eustatic</sub></div>
+<div class="eq" style="font-size:14px">Rate = U / t<sub>age</sub></div>
+</div>
+</div>
+
+<div>
+<h2>3. Global parameters</h2>
+<div class="panel accent-teal">
+<div class="slider-row">
+<label>Sea level rise</label>
+<input type="range" min="1" max="200" value="25" step="1" id="sl-global" oninput="runAll()">
+<span class="out" id="sl-out">25 m</span>
+</div>
+<div class="field-row">
+<div class="field">
+<label>Target elevation (MdD)</label>
+<input type="number" id="h-target" value="200" step="5" oninput="runAll()">
+<div class="unit">meters above present SL</div>
+</div>
+<div class="field">
+<label>Coast-to-target distance</label>
+<input type="number" id="d-target" value="4100" step="100" oninput="runAll()">
+<div class="unit">km (via river channel)</div>
+</div>
+</div>
+<div class="field-row">
+<div class="field">
+<label>Incursion age</label>
+<input type="number" id="t-age" value="3.45" step="0.05" oninput="runAll()">
+<div class="unit">Ma (for uplift rate calc)</div>
+</div>
+<div class="field">
+<label>Ocean area</label>
+<input type="number" id="a-ocean" value="362.5" step="0.5" oninput="runAll()">
+<div class="unit">× 10⁶ km²</div>
+</div>
+</div>
+</div>
+
+<h2>4. Concave profile control points</h2>
+<div class="panel accent-coral">
+<p style="font-size:12px;color:var(--tx2);margin:0 0 12px">Edit distance and elevation for each river segment waypoint. Profile interpolates linearly between points.</p>
+<table class="seg-table" id="seg-tbl">
+<tr><th>Waypoint</th><th>Dist (km)</th><th>Elev (m)</th><th>Slope</th><th class="bar-cell">Gradient</th></tr>
+</table>
+<button onclick="addSeg()" style="margin-top:10px;padding:6px 14px;font-size:12px;font-family:var(--font);border:1px solid var(--bd);border-radius:6px;background:var(--bg);cursor:pointer">+ Add waypoint</button>
+</div>
+
+<h2>5. Results</h2>
+<div class="grid2" style="margin-bottom:16px">
+<div class="stat" id="st-linr"><p class="lbl">Linear reach</p><p class="val">—</p></div>
+<div class="stat" id="st-conr"><p class="lbl">Concave reach</p><p class="val">—</p></div>
+</div>
+<div class="grid3" style="margin-bottom:16px">
+<div class="stat" id="st-linyn"><p class="lbl">Linear reaches MdD?</p><p class="val">—</p></div>
+<div class="stat" id="st-conyn"><p class="lbl">Concave reaches MdD?</p><p class="val">—</p></div>
+<div class="stat" id="st-diff"><p class="lbl">Concave − linear</p><p class="val">—</p></div>
+</div>
+<div class="grid3">
+<div class="stat" id="st-lslope"><p class="lbl">Linear slope</p><p class="val">—</p></div>
+<div class="stat" id="st-uplift"><p class="lbl">Required uplift</p><p class="val">—</p></div>
+<div class="stat" id="st-rate"><p class="lbl">Implied uplift rate</p><p class="val">—</p></div>
+</div>
+</div>
+</div>
+
+<hr class="divider">
+
+<h2>6. Profile comparison</h2>
+<div class="chart-box">
+<canvas id="cv" height="320"></canvas>
+<div class="chart-legend">
+<span><span class="dot" style="background:var(--tx)"></span>Concave (real) profile</span>
+<span><span class="dot" style="background:var(--tx2);border-top:1px dashed var(--tx2)"></span>Linear model</span>
+<span><span class="dot" style="background:var(--blue);opacity:0.4"></span>Inundated area</span>
+<span><span class="dot" style="background:var(--coral)"></span>Madre de Dios</span>
+<span><span class="dot" style="background:var(--teal)"></span>Flood limit</span>
+</div>
+</div>
+
+<h2>7. Sensitivity: sea level vs. reach</h2>
+<div class="chart-box">
+<canvas id="cv2" height="280"></canvas>
+<div class="chart-legend">
+<span><span class="dot" style="background:var(--blue)"></span>Concave model</span>
+<span><span class="dot" style="background:var(--tx2)"></span>Linear model</span>
+<span><span class="dot" style="background:var(--coral);opacity:0.3"></span>MdD distance</span>
+</div>
+</div>
+
+<hr class="divider">
+
+<h2>8. Foreland flexural basin model</h2>
+<p style="font-size:12px;color:var(--tx2);margin:0 0 16px">Elastic plate deflection under Andean orogenic load (Beaumont 1981; Turcotte &amp; Schubert 2002). Compare predicted uplift rates at MdD and Fitzcarrald Arch with published values from Espurt et al. (2007, 2010), Regard et al. (2009), and Bishop et al. (2018).</p>
+
+<div class="grid2">
+<div>
+<h3 style="margin-bottom:8px">Flexural equations</h3>
+<div class="panel accent-purple" style="padding:14px 16px;margin-bottom:16px">
+<div class="eq" style="font-size:14px;padding:8px 0">w(x) = w<sub>0</sub> · e<sup style="font-size:10px">−x/α</sup> · cos(x/α)</div>
+<div class="eq" style="font-size:13px;padding:4px 0">α = [ <span class="frac"><span class="n">4D</span><span class="d">(ρ<sub>m</sub>−ρ<sub>f</sub>)g</span></span> ]<sup style="font-size:9px">1/4</sup> &nbsp;&nbsp; D = <span class="frac"><span class="n">E·T<sub>e</sub>³</span><span class="d">12(1−ν²)</span></span></div>
+<div class="eq" style="font-size:13px;padding:4px 0">U(x) = <span class="frac"><span class="n">w<sub>Mio</sub>(x) − w<sub>now</sub>(x)</span><span class="d">Δt</span></span></div>
+</div>
+
+<h3 style="margin-bottom:8px">Plate parameters</h3>
+<div class="panel accent-purple" style="padding:14px 16px;margin-bottom:16px">
+<div class="field-row">
+<div class="field"><label>T<sub>e</sub> elastic thickness</label><input type="number" id="fx-Te" value="40" step="5" oninput="runAll()"><div class="unit">km (Andes: 25–70)</div></div>
+<div class="field"><label>Young's mod. E</label><input type="number" id="fx-E" value="70" step="5" oninput="runAll()"><div class="unit">GPa</div></div>
+<div class="field"><label>Poisson ν</label><input type="number" id="fx-nu" value="0.25" step="0.01" oninput="runAll()"><div class="unit"></div></div>
+</div>
+<div class="field-row">
+<div class="field"><label>ρ<sub>mantle</sub></label><input type="number" id="fx-rhom" value="3300" step="50" oninput="runAll()"><div class="unit">kg/m³</div></div>
+<div class="field"><label>ρ<sub>fill</sub></label><input type="number" id="fx-rhof" value="2400" step="50" oninput="runAll()"><div class="unit">kg/m³</div></div>
+</div>
+</div>
+
+<h3 style="margin-bottom:8px">Load &amp; timing</h3>
+<div class="panel accent-purple" style="padding:14px 16px">
+<div class="field-row">
+<div class="field"><label>w₀ Miocene (foredeep max)</label><input type="number" id="fx-w0m" value="4000" step="200" oninput="runAll()"><div class="unit">m (Espurt: up to 8 km fill)</div></div>
+<div class="field"><label>w₀ present</label><input type="number" id="fx-w0n" value="2500" step="200" oninput="runAll()"><div class="unit">m (post-arch reduction)</div></div>
+</div>
+<div class="field-row">
+<div class="field"><label>Δt (arch onset)</label><input type="number" id="fx-dt" value="4.0" step="0.5" oninput="runAll()"><div class="unit">Myr (Espurt 2007: ~4 Ma)</div></div>
+<div class="field"><label>MdD dist. from thrust</label><input type="number" id="fx-xmdd" value="180" step="10" oninput="runAll()"><div class="unit">km</div></div>
+</div>
+<div class="field-row">
+<div class="field"><label>Fitzcarrald dist.</label><input type="number" id="fx-xfitz" value="350" step="10" oninput="runAll()"><div class="unit">km</div></div>
+<div class="field"><label>Profile extent</label><input type="number" id="fx-xmax" value="700" step="50" oninput="runAll()"><div class="unit">km</div></div>
+</div>
+</div>
+</div>
+
+<div>
+<h3 style="margin-bottom:8px">Flexural results</h3>
+<div class="grid3" style="margin-bottom:12px">
+<div class="stat" id="fx-alpha"><p class="lbl">α flexural param</p><p class="val">—</p></div>
+<div class="stat" id="fx-D"><p class="lbl">Rigidity D</p><p class="val">—</p></div>
+<div class="stat" id="fx-fb"><p class="lbl">Forebulge pos.</p><p class="val">—</p></div>
+</div>
+<div class="grid4" style="margin-bottom:12px">
+<div class="stat" id="fx-wm1"><p class="lbl">MdD Mio. defl.</p><p class="val">—</p></div>
+<div class="stat" id="fx-wn1"><p class="lbl">MdD now defl.</p><p class="val">—</p></div>
+<div class="stat" id="fx-wm2"><p class="lbl">Fitz. Mio. defl.</p><p class="val">—</p></div>
+<div class="stat" id="fx-wn2"><p class="lbl">Fitz. now defl.</p><p class="val">—</p></div>
+</div>
+<div class="grid2" style="margin-bottom:16px">
+<div class="stat" id="fx-umdd"><p class="lbl">MdD uplift rate</p><p class="val">—</p><p class="note">Parra target: ~51 m/Myr</p></div>
+<div class="stat" id="fx-ufitz"><p class="lbl">Fitz. uplift rate</p><p class="val">—</p><p class="note">Published: 100–300 m/Myr</p></div>
+</div>
+
+<h3 style="margin-bottom:8px">Deflection profiles</h3>
+<div class="chart-box" style="margin-bottom:16px">
+<canvas id="cv3" height="220"></canvas>
+<div class="chart-legend">
+<span><span class="dot" style="background:var(--coral)"></span>Miocene</span>
+<span><span class="dot" style="background:var(--teal)"></span>Present</span>
+<span><span class="dot" style="background:var(--tx3);opacity:0.3"></span>Zero line</span>
+</div>
+</div>
+
+<h3 style="margin-bottom:8px">Uplift rate profile</h3>
+<div class="chart-box">
+<canvas id="cv4" height="220"></canvas>
+<div class="chart-legend">
+<span><span class="dot" style="background:var(--blue)"></span>Predicted rate</span>
+<span><span class="dot" style="background:var(--coral)"></span>Parra req. ~51</span>
+<span><span class="dot" style="background:var(--teal);opacity:0.3"></span>Espurt/Bishop 100–300</span>
+</div>
+</div>
+</div>
+</div>
+
+<p style="font-size:11px;color:var(--tx3);line-height:1.7;margin-top:8px;border-top:1px solid var(--bd);padding-top:10px">
+<b style="color:var(--tx2)">References:</b>
+Espurt et al. 2007 (Geology 35:515) · Espurt et al. 2010 (Blackwell) · Regard et al. 2009 (Geomorphology 107:107) · Bishop et al. 2018 (Tectonophysics 731–732) · Beaumont 1981 (Geophys. J. Roy. Astron. Soc. 65:291) · Turcotte &amp; Schubert 2002 (Geodynamics, Cambridge) · Watts et al. 1995 · Pérez-Gussinyé et al. 2007 · Parra et al. (conf. abstract: late Early Pliocene marine incursion, Madre de Dios basin).
+</p>
+
+<hr class="divider">
+
+<h2>9. Global uplift rate comparison</h2>
+<p style="font-size:12px;color:var(--tx2);margin:0 0 16px">Model-predicted uplift rates at MdD and Fitzcarrald Arch (from §8) plotted against published rates from well-constrained tectonic systems worldwide. Dashed red line = Parra et al. required rate. Green band = Espurt/Bishop published Fitzcarrald range.</p>
+
+<div class="chart-box">
+<div style="position:relative;width:100%;height:560px">
+<canvas id="cv5"></canvas>
+</div>
+<div class="chart-legend">
+<span><span class="dot" style="background:#0d9488"></span>Andean system</span>
+<span><span class="dot" style="background:#2563eb"></span>Himalayan system</span>
+<span><span class="dot" style="background:#d97706"></span>Sierra Nevada</span>
+<span><span class="dot" style="background:#9c9a92"></span>Other foreland</span>
+<span><span class="dot" style="background:#7c3aed"></span>This model (§8)</span>
+<span><span class="dot" style="background:#dc2626"></span>Parra et al. required</span>
+</div>
+</div>
+
+<p style="font-size:11px;color:var(--tx3);line-height:1.7;margin-top:8px">
+<b style="color:var(--tx2)">[1]</b> Espurt et al. 2007, 2010; Regard et al. 2009; Bishop et al. 2018 — Fitzcarrald Arch vitrinite, seismic, geomorphic, crustal thickening.
+<b style="color:var(--tx2)">[2]</b> Pelletier 2007 — C. Andes foreland basin geometry inversion.
+<b style="color:var(--tx2)">[3]</b> Sundell et al. 2018; Garzione et al. 2017 — Altiplano paleoaltimetry.
+<b style="color:var(--tx2)">[4]</b> Gregory-Wodzicki 2000; Mora et al. 2008 — E. Cordillera paleobotany/thermochronology.
+<b style="color:var(--tx2)">[5]</b> Zeitler et al. 1982; Cerveny et al. 1988 — Nanga Parbat fission-track.
+<b style="color:var(--tx2)">[6]</b> Sakai et al. 2006; Mugnier et al. 2003 — Siwalik frontal range.
+<b style="color:var(--tx2)">[7]</b> Bernet et al. 2006; Lavé &amp; Avouac 2000 — Sub-Himalayan thrust.
+<b style="color:var(--tx2)">[8]</b> Stock et al. 2004 — Sierra Nevada ²⁶Al/¹⁰Be cave dating.
+<b style="color:var(--tx2)">[9,11]</b> Saleeby et al. 2013; Phillips 2025 — S./N. Sierra tilting.
+<b style="color:var(--tx2)">[10]</b> Cecil et al. 2014 — Kern Arch (U-Th)/He.
+<b style="color:var(--tx2)">[12]</b> Royden 1993; Naylor &amp; Sinclair 2008 — N. Alpine foredeep.
+<b style="color:var(--tx2)">[13]</b> Parra et al. — required uplift.
+<b style="color:var(--tx2)">[M]</b> This model §8 — predicted from flexural parameters.
+</p>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+let segs = [
+  {name:'Atlantic mouth', d:0, e:0, fixed:true},
+  {name:'Óbidos', d:600, e:17},
+  {name:'Manaus', d:1600, e:44},
+  {name:'Iquitos', d:3700, e:106},
+  {name:'Madre de Dios', d:4100, e:200},
+];
+
+function renderSegTable(){
+  const tb = document.getElementById('seg-tbl');
+  let html = '<tr><th>Waypoint</th><th>Dist (km)</th><th>Elev (m)</th><th>Slope</th><th class="bar-cell">Gradient</th></tr>';
+  const maxSlope = Math.max(...segs.slice(1).map((_,i)=>{
+    const dd=segs[i+1].d-segs[i].d; const de=segs[i+1].e-segs[i].e;
+    return dd>0?de/dd:0;
+  }),0.001);
+  segs.forEach((s,i)=>{
+    const slope = i>0 ? ((s.e-segs[i-1].e)/((s.d-segs[i-1].d)*1000)) : 0;
+    const slopeCm = i>0 ? ((s.e-segs[i-1].e)/(s.d-segs[i-1].d))*100 : 0;
+    const localS = i>0 ? (s.e-segs[i-1].e)/(s.d-segs[i-1].d) : 0;
+    const barPct = maxSlope>0 ? (localS/maxSlope)*100 : 0;
+    const canDel = !s.fixed && i>0;
+    html += `<tr>
+      <td><input type="text" value="${s.name}" style="width:100px;border:none;background:transparent;font-size:13px;font-family:var(--font)" onchange="segs[${i}].name=this.value;runAll()"></td>
+      <td><input type="number" value="${s.d}" ${s.fixed?'disabled':''} onchange="segs[${i}].d=+this.value;runAll()"></td>
+      <td><input type="number" value="${s.e}" ${s.fixed?'disabled':''} onchange="segs[${i}].e=+this.value;runAll()"></td>
+      <td class="slope-val">${i>0?slope.toExponential(2):'—'}<br><span style="font-size:11px;color:var(--tx3)">${i>0?slopeCm.toFixed(1)+' cm/km':'—'}</span></td>
+      <td class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:${barPct}%;background:${barPct>60?'var(--coral)':barPct>20?'var(--blue)':'var(--teal)'}"></div></div></td>
+    </tr>`;
+  });
+  tb.innerHTML = html;
+}
+
+function addSeg(){
+  const last = segs[segs.length-1];
+  segs.push({name:'New point', d:last.d+200, e:last.e+50});
+  renderSegTable();
+  runAll();
+}
+
+function elevAt(d){
+  if(d<=segs[0].d) return segs[0].e;
+  for(let i=1;i<segs.length;i++){
+    if(d<=segs[i].d){
+      const t=(d-segs[i-1].d)/(segs[i].d-segs[i-1].d);
+      return segs[i-1].e + t*(segs[i].e-segs[i-1].e);
+    }
+  }
+  return segs[segs.length-1].e;
+}
+
+function concaveReach(sl){
+  const maxD = segs[segs.length-1].d;
+  for(let d=0;d<=maxD;d+=2){
+    if(elevAt(d)>=sl) return d;
+  }
+  return maxD;
+}
+
+function setStat(id,val,note,cls){
+  const el = document.getElementById(id);
+  el.className = 'stat'+(cls?' '+cls:'');
+  el.querySelector('.val').textContent = val;
+  let n = el.querySelector('.note');
+  if(note){
+    if(!n){n=document.createElement('p');n.className='note';el.appendChild(n);}
+    n.textContent=note;
+  } else if(n) n.textContent='';
+}
+
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const cv2 = document.getElementById('cv2');
+const ctx2 = cv2.getContext('2d');
+
+function run(){
+  const sl = +document.getElementById('sl-global').value;
+  const hT = +document.getElementById('h-target').value;
+  const dT = +document.getElementById('d-target').value;
+  const tA = +document.getElementById('t-age').value;
+
+  document.getElementById('sl-out').textContent = sl+' m';
+
+  renderSegTable();
+
+  const linSlope = hT/(dT*1000);
+  const linReach = sl/linSlope/1000;
+  const conReach = concaveReach(sl);
+
+  setStat('st-linr', Math.round(linReach).toLocaleString()+' km');
+  setStat('st-conr', Math.round(conReach).toLocaleString()+' km');
+
+  if(linReach>=dT){
+    setStat('st-linyn','Yes','','yes');
+  } else {
+    setStat('st-linyn','No',Math.round(dT-linReach).toLocaleString()+' km short','no');
+  }
+  if(conReach>=dT){
+    setStat('st-conyn','Yes','','yes');
+  } else {
+    setStat('st-conyn','No',Math.round(dT-conReach).toLocaleString()+' km short','no');
+  }
+
+  const diff = conReach - linReach;
+  setStat('st-diff',(diff>=0?'+':'')+Math.round(diff).toLocaleString()+' km', diff>0?'Concave floods farther':'Linear floods farther');
+
+  setStat('st-lslope', linSlope.toExponential(2), (linSlope*100000).toFixed(2)+' cm/km');
+
+  const uplift = hT - sl;
+  setStat('st-uplift', Math.round(uplift)+' m', uplift>0?'Basin must have risen this much':'SL exceeds target');
+
+  const rate = tA>0 ? uplift/tA : 0;
+  setStat('st-rate', Math.round(rate)+' m/Myr', (rate/1000).toFixed(4)+' mm/yr');
+
+  drawProfile(sl,hT,dT,linSlope,linReach,conReach);
+  drawSensitivity(hT,dT);
+}
+
+function drawProfile(sl,hT,dT,linSlope,linReach,conReach){
+  const dpr = window.devicePixelRatio||1;
+  const rect = cv.getBoundingClientRect();
+  cv.width = rect.width*dpr; cv.height = rect.height*dpr;
+  ctx.scale(dpr,dpr);
+  const W=rect.width, H=rect.height;
+  const pad={t:30,r:20,b:40,l:56};
+  const pw=W-pad.l-pad.r, ph=H-pad.t-pad.b;
+
+  const maxD=Math.max(segs[segs.length-1].d,dT)*1.05;
+  const maxE=Math.max(segs[segs.length-1].e,hT,sl)*1.2;
+
+  function px(d){return pad.l+(d/maxD)*pw}
+  function py(e){return pad.t+ph-(e/maxE)*ph}
+
+  ctx.clearRect(0,0,W,H);
+
+  ctx.strokeStyle='#d8d6cf';ctx.lineWidth=0.5;
+  ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+ph);ctx.lineTo(pad.l+pw,pad.t+ph);ctx.stroke();
+
+  ctx.fillStyle='#9c9a92';ctx.font='11px "IBM Plex Mono"';ctx.textAlign='right';
+  const eStep = maxE>300?100:maxE>150?50:25;
+  for(let e=0;e<=maxE;e+=eStep){
+    const y=py(e);
+    ctx.fillText(e,pad.l-6,y+4);
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+pw,y);
+    ctx.strokeStyle='#e8e6e1';ctx.lineWidth=0.5;ctx.stroke();
+  }
+  ctx.textAlign='center';
+  const dStep = maxD>6000?1000:500;
+  for(let d=0;d<=maxD;d+=dStep){
+    const x=px(d);
+    ctx.fillText(d.toLocaleString(),x,pad.t+ph+18);
+    ctx.beginPath();ctx.moveTo(x,pad.t+ph);ctx.lineTo(x,pad.t+ph+4);
+    ctx.strokeStyle='#9c9a92';ctx.lineWidth=0.5;ctx.stroke();
+  }
+  ctx.fillStyle='#9c9a92';ctx.font='11px "IBM Plex Sans"';
+  ctx.textAlign='left';ctx.fillText('Elevation (m)',pad.l,pad.t-10);
+  ctx.textAlign='right';ctx.fillText('Distance from Atlantic (km)',pad.l+pw,pad.t+ph+34);
+
+  const sly=py(sl);
+  ctx.fillStyle='rgba(37,99,235,0.08)';
+  ctx.beginPath();
+  ctx.moveTo(px(0),py(0));
+  const crc=Math.min(conReach,maxD);
+  for(let d=0;d<=crc;d+=5){
+    ctx.lineTo(px(d),Math.max(py(elevAt(d)),sly));
+  }
+  ctx.lineTo(px(crc),sly);
+  ctx.lineTo(px(0),sly);
+  ctx.closePath();ctx.fill();
+
+  ctx.setLineDash([8,5]);ctx.strokeStyle='rgba(37,99,235,0.5)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(px(0),sly);ctx.lineTo(px(maxD),sly);ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.fillStyle='rgba(37,99,235,0.6)';ctx.font='11px "IBM Plex Sans"';
+  ctx.textAlign='left';ctx.fillText('SL +'+sl+'m',px(maxD)-60,sly-5);
+
+  ctx.setLineDash([6,4]);ctx.strokeStyle='#9c9a92';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(px(0),py(0));
+  for(let d=0;d<=maxD;d+=50){ctx.lineTo(px(d),py(d*(hT/(dT*1000))*1000))}
+  ctx.stroke();ctx.setLineDash([]);
+
+  ctx.strokeStyle='#1a1a18';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(px(segs[0].d),py(segs[0].e));
+  for(let i=1;i<segs.length;i++){ctx.lineTo(px(segs[i].d),py(segs[i].e))}
+  ctx.stroke();
+
+  segs.forEach((s,i)=>{
+    ctx.fillStyle='#1a1a18';
+    ctx.beginPath();ctx.arc(px(s.d),py(s.e),3,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#6b6a65';ctx.font='11px "IBM Plex Sans"';ctx.textAlign='left';
+    const lx=px(s.d)+6, ly=py(s.e)- (i===segs.length-1?-14:8);
+    ctx.fillText(s.name+' ('+s.e+'m)',lx,ly);
+  });
+
+  ctx.fillStyle='#dc2626';
+  ctx.beginPath();ctx.arc(px(dT),py(hT),5,0,Math.PI*2);ctx.fill();
+
+  ctx.fillStyle='#0d9488';
+  ctx.beginPath();ctx.arc(px(Math.min(crc,maxD)),sly,5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#0d9488';ctx.font='11px "IBM Plex Sans"';ctx.textAlign='left';
+  ctx.fillText('Concave: '+Math.round(crc)+' km',px(Math.min(crc,maxD))+8,sly+14);
+
+  const lrc=Math.min(linReach,maxD);
+  ctx.fillStyle='#d97706';
+  ctx.beginPath();ctx.arc(px(lrc),sly,4,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#d97706';
+  ctx.fillText('Linear: '+Math.round(linReach)+' km',px(lrc)+8,sly-8);
+}
+
+function drawSensitivity(hT,dT){
+  const dpr = window.devicePixelRatio||1;
+  const rect = cv2.getBoundingClientRect();
+  cv2.width = rect.width*dpr; cv2.height = rect.height*dpr;
+  ctx2.scale(dpr,dpr);
+  const W=rect.width, H=rect.height;
+  const pad={t:24,r:20,b:40,l:56};
+  const pw=W-pad.l-pad.r, ph=H-pad.t-pad.b;
+
+  const maxSL=200;
+  const maxReach = Math.max(segs[segs.length-1].d,dT)*1.3;
+
+  function px(r){return pad.l+(r/maxReach)*pw}
+  function py(s){return pad.t+ph-(s/maxSL)*ph}
+
+  ctx2.clearRect(0,0,W,H);
+
+  ctx2.strokeStyle='#d8d6cf';ctx2.lineWidth=0.5;
+  ctx2.beginPath();ctx2.moveTo(pad.l,pad.t);ctx2.lineTo(pad.l,pad.t+ph);ctx2.lineTo(pad.l+pw,pad.t+ph);ctx2.stroke();
+
+  ctx2.fillStyle='#9c9a92';ctx2.font='11px "IBM Plex Mono"';
+  ctx2.textAlign='right';
+  for(let s=0;s<=maxSL;s+=25){
+    const y=py(s);ctx2.fillText(s,pad.l-6,y+4);
+    ctx2.beginPath();ctx2.moveTo(pad.l,y);ctx2.lineTo(pad.l+pw,y);
+    ctx2.strokeStyle='#e8e6e1';ctx2.lineWidth=0.5;ctx2.stroke();
+  }
+  ctx2.textAlign='center';
+  const rStep=maxReach>6000?1000:500;
+  for(let r=0;r<=maxReach;r+=rStep){
+    const x=px(r);ctx2.fillText(r.toLocaleString(),x,pad.t+ph+18);
+  }
+  ctx2.fillStyle='#9c9a92';ctx2.font='11px "IBM Plex Sans"';
+  ctx2.textAlign='left';ctx2.fillText('Sea level rise (m)',pad.l,pad.t-6);
+  ctx2.textAlign='right';ctx2.fillText('Inland reach (km)',pad.l+pw,pad.t+ph+34);
+
+  ctx2.fillStyle='rgba(220,38,38,0.06)';
+  ctx2.fillRect(px(dT),pad.t,px(maxReach)-px(dT),ph);
+  ctx2.strokeStyle='rgba(220,38,38,0.3)';ctx2.lineWidth=1;ctx2.setLineDash([4,4]);
+  ctx2.beginPath();ctx2.moveTo(px(dT),pad.t);ctx2.lineTo(px(dT),pad.t+ph);ctx2.stroke();
+  ctx2.setLineDash([]);
+  ctx2.fillStyle='#dc2626';ctx2.font='11px "IBM Plex Sans"';ctx2.textAlign='left';
+  ctx2.fillText('MdD '+dT+' km',px(dT)+4,pad.t+14);
+
+  const linSlope=hT/(dT*1000);
+  ctx2.strokeStyle='#9c9a92';ctx2.lineWidth=1.5;
+  ctx2.beginPath();
+  for(let s=0;s<=maxSL;s+=1){
+    const r=s/linSlope/1000;
+    const x=px(Math.min(r,maxReach)),y=py(s);
+    s===0?ctx2.moveTo(x,y):ctx2.lineTo(x,y);
+  }
+  ctx2.stroke();
+
+  ctx2.strokeStyle='#2563eb';ctx2.lineWidth=2;
+  ctx2.beginPath();
+  for(let s=0;s<=maxSL;s+=1){
+    const r=concaveReach(s);
+    const x=px(Math.min(r,maxReach)),y=py(s);
+    s===0?ctx2.moveTo(x,y):ctx2.lineTo(x,y);
+  }
+  ctx2.stroke();
+
+  [25,65.5,hT].forEach(sv=>{
+    const cr=concaveReach(sv);
+    const lr=sv/linSlope/1000;
+    ctx2.setLineDash([3,3]);ctx2.strokeStyle='#d8d6cf';ctx2.lineWidth=0.5;
+    ctx2.beginPath();ctx2.moveTo(pad.l,py(sv));ctx2.lineTo(px(Math.min(cr,maxReach)),py(sv));ctx2.stroke();
+    ctx2.setLineDash([]);
+    ctx2.fillStyle='#2563eb';
+    ctx2.beginPath();ctx2.arc(px(Math.min(cr,maxReach)),py(sv),3,0,Math.PI*2);ctx2.fill();
+    ctx2.fillStyle='#9c9a92';
+    ctx2.beginPath();ctx2.arc(px(Math.min(lr,maxReach)),py(sv),3,0,Math.PI*2);ctx2.fill();
+  });
+
+  ctx2.fillStyle='#6b6a65';ctx2.font='11px "IBM Plex Sans"';ctx2.textAlign='right';
+  ctx2.fillText('Pliocene ~25m',pad.l+pw-4,py(25)+4);
+  ctx2.fillText('All ice ~65m',pad.l+pw-4,py(65.5)+4);
+  ctx2.fillText('MdD elev '+hT+'m',pad.l+pw-4,py(hT)+4);
+}
+
+renderSegTable();
+run();
+runFlex();
+setTimeout(drawCompChart, 100);
+window.addEventListener('resize',()=>{run();runFlex();drawCompChart()});
+
+function runAll(){run();runFlex();drawCompChart()}
+
+function fxDefl(x_km, w0, alpha){
+  const x = x_km * 1000;
+  if(x < 0) return w0;
+  return w0 * Math.exp(-x/alpha) * Math.cos(x/alpha);
+}
+
+function fxSetStat(id, val, cls){
+  const el = document.getElementById(id);
+  el.querySelector('.val').textContent = val;
+  el.className = 'stat' + (cls ? ' '+cls : '');
+}
+
+function runFlex(){
+  const Te = +document.getElementById('fx-Te').value;
+  const Ev = +document.getElementById('fx-E').value;
+  const nu = +document.getElementById('fx-nu').value;
+  const rhom = +document.getElementById('fx-rhom').value;
+  const rhof = +document.getElementById('fx-rhof').value;
+  const w0m = +document.getElementById('fx-w0m').value;
+  const w0n = +document.getElementById('fx-w0n').value;
+  const dt = +document.getElementById('fx-dt').value;
+  const xmdd = +document.getElementById('fx-xmdd').value;
+  const xfitz = +document.getElementById('fx-xfitz').value;
+  const xmax = +document.getElementById('fx-xmax').value;
+
+  const Te_m = Te*1000, E_pa = Ev*1e9;
+  const D = (E_pa * Math.pow(Te_m,3))/(12*(1-nu*nu));
+  const alpha = Math.pow((4*D)/((rhom-rhof)*9.81), 0.25);
+  const alpha_km = alpha/1000;
+  const fb_km = alpha_km * 3*Math.PI/4;
+
+  fxSetStat('fx-alpha', Math.round(alpha_km)+' km');
+  fxSetStat('fx-D', (D/1e22).toFixed(1)+'e22 N·m');
+  fxSetStat('fx-fb', Math.round(fb_km)+' km');
+
+  const wm1=fxDefl(xmdd,w0m,alpha), wn1=fxDefl(xmdd,w0n,alpha);
+  const wm2=fxDefl(xfitz,w0m,alpha), wn2=fxDefl(xfitz,w0n,alpha);
+  fxSetStat('fx-wm1', Math.round(wm1)+' m');
+  fxSetStat('fx-wn1', Math.round(wn1)+' m');
+  fxSetStat('fx-wm2', Math.round(wm2)+' m');
+  fxSetStat('fx-wn2', Math.round(wn2)+' m');
+
+  const rMdd = dt>0?(wm1-wn1)/dt:0;
+  const rFitz = dt>0?(wm2-wn2)/dt:0;
+  fxSetStat('fx-umdd', Math.round(rMdd)+' m/Myr', Math.abs(rMdd-51)<40?'match':'miss');
+  fxSetStat('fx-ufitz', Math.round(rFitz)+' m/Myr', rFitz>=60&&rFitz<=400?'match':'miss');
+
+  drawFlexProfiles(alpha, w0m, w0n, xmdd, xfitz, xmax);
+  drawFlexRates(alpha, w0m, w0n, dt, xmdd, xfitz, xmax);
+}
+
+function drawFlexProfiles(alpha, w0m, w0n, xmdd, xfitz, xmax){
+  const c = document.getElementById('cv3');
+  const cx = c.getContext('2d');
+  const dpr = window.devicePixelRatio||1;
+  const rect = c.getBoundingClientRect();
+  c.width = rect.width*dpr; c.height = rect.height*dpr;
+  cx.scale(dpr,dpr);
+  const W=rect.width, H=rect.height;
+  const pad={t:20,r:14,b:32,l:52};
+  const pw=W-pad.l-pad.r, ph=H-pad.t-pad.b;
+
+  const allW=[];
+  for(let x=0;x<=xmax;x+=3){allW.push(fxDefl(x,w0m,alpha));allW.push(fxDefl(x,w0n,alpha))}
+  const minW=Math.min(...allW,-200), maxW=Math.max(...allW,200);
+  const rng=maxW-minW||1;
+  function px(x){return pad.l+(x/xmax)*pw}
+  function py(w){return pad.t+ph-((w-minW)/rng)*ph}
+
+  cx.clearRect(0,0,W,H);
+  cx.strokeStyle='#d8d6cf';cx.lineWidth=0.5;
+  cx.beginPath();cx.moveTo(pad.l,pad.t);cx.lineTo(pad.l,pad.t+ph);cx.lineTo(pad.l+pw,pad.t+ph);cx.stroke();
+
+  cx.setLineDash([4,4]);cx.strokeStyle='#9c9a9244';cx.lineWidth=1;
+  cx.beginPath();cx.moveTo(pad.l,py(0));cx.lineTo(pad.l+pw,py(0));cx.stroke();cx.setLineDash([]);
+
+  cx.fillStyle='#9c9a92';cx.font='10px "IBM Plex Mono"';cx.textAlign='right';
+  const wSt=rng>6000?2000:rng>3000?1000:500;
+  for(let w=Math.ceil(minW/wSt)*wSt;w<=maxW;w+=wSt){cx.fillText(w,pad.l-4,py(w)+3)}
+  cx.textAlign='center';
+  for(let x=0;x<=xmax;x+=100){cx.fillText(x,px(x),pad.t+ph+14)}
+  cx.fillStyle='#9c9a92';cx.font='10px "IBM Plex Sans"';
+  cx.textAlign='left';cx.fillText('Deflection (m)',pad.l,pad.t-6);
+  cx.textAlign='right';cx.fillText('km from thrust front',pad.l+pw,pad.t+ph+26);
+
+  function drawC(w0,col,lw){cx.strokeStyle=col;cx.lineWidth=lw;cx.beginPath();
+    for(let x=0;x<=xmax;x+=2){const w=fxDefl(x,w0,alpha);x===0?cx.moveTo(px(x),py(w)):cx.lineTo(px(x),py(w))}cx.stroke()}
+  drawC(w0m,'#dc2626',2);
+  drawC(w0n,'#0d9488',2);
+
+  [{x:xmdd,l:'MdD',c:'#2563eb'},{x:xfitz,l:'Fitz.',c:'#7c3aed'}].forEach(m=>{
+    cx.setLineDash([3,3]);cx.strokeStyle=m.c+'55';cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(px(m.x),pad.t);cx.lineTo(px(m.x),pad.t+ph);cx.stroke();cx.setLineDash([]);
+    cx.fillStyle=m.c;cx.font='500 10px "IBM Plex Sans"';cx.textAlign='center';
+    cx.fillText(m.l,px(m.x),pad.t+ph+24);
+    cx.fillStyle='#dc2626';cx.beginPath();cx.arc(px(m.x),py(fxDefl(m.x,w0m,alpha)),3,0,Math.PI*2);cx.fill();
+    cx.fillStyle='#0d9488';cx.beginPath();cx.arc(px(m.x),py(fxDefl(m.x,w0n,alpha)),3,0,Math.PI*2);cx.fill();
+  });
+}
+
+function drawFlexRates(alpha, w0m, w0n, dt, xmdd, xfitz, xmax){
+  const c = document.getElementById('cv4');
+  const cx = c.getContext('2d');
+  const dpr = window.devicePixelRatio||1;
+  const rect = c.getBoundingClientRect();
+  c.width = rect.width*dpr; c.height = rect.height*dpr;
+  cx.scale(dpr,dpr);
+  const W=rect.width, H=rect.height;
+  const pad={t:20,r:14,b:32,l:52};
+  const pw=W-pad.l-pad.r, ph=H-pad.t-pad.b;
+
+  const rates=[];
+  for(let x=0;x<=xmax;x+=2){const wm=fxDefl(x,w0m,alpha),wn=fxDefl(x,w0n,alpha);rates.push(dt>0?(wm-wn)/dt:0)}
+  const minR=Math.min(...rates,-50), maxR=Math.max(...rates,350);
+  const rng=maxR-minR||1;
+  function px(x){return pad.l+(x/xmax)*pw}
+  function py(r){return pad.t+ph-((r-minR)/rng)*ph}
+
+  cx.clearRect(0,0,W,H);
+  cx.strokeStyle='#d8d6cf';cx.lineWidth=0.5;
+  cx.beginPath();cx.moveTo(pad.l,pad.t);cx.lineTo(pad.l,pad.t+ph);cx.lineTo(pad.l+pw,pad.t+ph);cx.stroke();
+
+  cx.setLineDash([4,4]);cx.strokeStyle='#9c9a9244';cx.lineWidth=1;
+  cx.beginPath();cx.moveTo(pad.l,py(0));cx.lineTo(pad.l+pw,py(0));cx.stroke();cx.setLineDash([]);
+
+  cx.fillStyle='#9c9a92';cx.font='10px "IBM Plex Mono"';cx.textAlign='right';
+  const rSt=rng>1000?200:rng>500?100:50;
+  for(let r=Math.ceil(minR/rSt)*rSt;r<=maxR;r+=rSt){cx.fillText(r,pad.l-4,py(r)+3)}
+  cx.textAlign='center';
+  for(let x=0;x<=xmax;x+=100){cx.fillText(x,px(x),pad.t+ph+14)}
+  cx.fillStyle='#9c9a92';cx.font='10px "IBM Plex Sans"';
+  cx.textAlign='left';cx.fillText('Uplift rate (m/Myr)',pad.l,pad.t-6);
+  cx.textAlign='right';cx.fillText('km from thrust front',pad.l+pw,pad.t+ph+26);
+
+  if(maxR>=100){
+    cx.fillStyle='#0d948815';
+    cx.fillRect(pad.l,py(300),pw,py(100)-py(300));
+    cx.setLineDash([6,4]);cx.strokeStyle='#0d9488';cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(pad.l,py(100));cx.lineTo(pad.l+pw,py(100));cx.stroke();
+    cx.beginPath();cx.moveTo(pad.l,py(300));cx.lineTo(pad.l+pw,py(300));cx.stroke();
+    cx.setLineDash([]);
+    cx.fillStyle='#0d9488';cx.font='10px "IBM Plex Sans"';cx.textAlign='right';
+    cx.fillText('Espurt/Bishop 100–300',pad.l+pw-4,py(300)-4);
+  }
+
+  cx.setLineDash([6,4]);cx.strokeStyle='#dc2626';cx.lineWidth=1.5;
+  cx.beginPath();cx.moveTo(pad.l,py(51));cx.lineTo(pad.l+pw,py(51));cx.stroke();cx.setLineDash([]);
+  cx.fillStyle='#dc2626';cx.font='10px "IBM Plex Sans"';cx.textAlign='right';
+  cx.fillText('Parra req. ~51',pad.l+pw-4,py(51)-4);
+
+  cx.strokeStyle='#2563eb';cx.lineWidth=2;cx.beginPath();
+  let i=0;for(let x=0;x<=xmax;x+=2){i===0?cx.moveTo(px(x),py(rates[i])):cx.lineTo(px(x),py(rates[i]));i++}
+  cx.stroke();
+
+  [{x:xmdd,l:'MdD',c:'#2563eb'},{x:xfitz,l:'Fitz.',c:'#7c3aed'}].forEach(m=>{
+    cx.setLineDash([3,3]);cx.strokeStyle=m.c+'55';cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(px(m.x),pad.t);cx.lineTo(px(m.x),pad.t+ph);cx.stroke();cx.setLineDash([]);
+    const wm=fxDefl(m.x,w0m,alpha),wn=fxDefl(m.x,w0n,alpha);
+    const rate=dt>0?(wm-wn)/dt:0;
+    cx.fillStyle=m.c;cx.beginPath();cx.arc(px(m.x),py(rate),4,0,Math.PI*2);cx.fill();
+    cx.font='500 10px "IBM Plex Sans"';cx.textAlign='center';
+    cx.fillText(m.l+': '+Math.round(rate),px(m.x),py(rate)-8);
+  });
+}
+
+let compChart = null;
+function drawCompChart(){
+  const Te = +document.getElementById('fx-Te').value;
+  const Ev = +document.getElementById('fx-E').value;
+  const nu = +document.getElementById('fx-nu').value;
+  const rhom = +document.getElementById('fx-rhom').value;
+  const rhof = +document.getElementById('fx-rhof').value;
+  const w0m = +document.getElementById('fx-w0m').value;
+  const w0n = +document.getElementById('fx-w0n').value;
+  const dt = +document.getElementById('fx-dt').value;
+  const xmdd = +document.getElementById('fx-xmdd').value;
+  const xfitz = +document.getElementById('fx-xfitz').value;
+
+  const Te_m=Te*1000, E_pa=Ev*1e9;
+  const D=(E_pa*Math.pow(Te_m,3))/(12*(1-nu*nu));
+  const alpha=Math.pow((4*D)/((rhom-rhof)*9.81),0.25);
+  const wm1=fxDefl(xmdd,w0m,alpha),wn1=fxDefl(xmdd,w0n,alpha);
+  const wm2=fxDefl(xfitz,w0m,alpha),wn2=fxDefl(xfitz,w0n,alpha);
+  const modelMdd=dt>0?Math.round((wm1-wn1)/dt):0;
+  const modelFitz=dt>0?Math.round((wm2-wn2)/dt):0;
+
+  const entries=[
+    {label:'Fitzcarrald — surface uplift [1]',lo:100,hi:125,cat:'andes'},
+    {label:'Fitzcarrald — total rock uplift [1]',lo:225,hi:300,cat:'andes'},
+    {label:'C. Andes foreland erosion [2]',lo:25,hi:45,cat:'andes'},
+    {label:'Altiplano average [3]',lo:200,hi:300,cat:'andes'},
+    {label:'Eastern Cordillera [4]',lo:600,hi:3000,cat:'andes'},
+    {label:'Nanga Parbat syntaxis [5]',lo:5000,hi:10000,cat:'himalaya'},
+    {label:'Siwalik Hills frontal range [6]',lo:250,hi:800,cat:'himalaya'},
+    {label:'Sub-Himalayan thrust front [7]',lo:150,hi:500,cat:'himalaya'},
+    {label:'Sierra Nev. Pliocene incision [8]',lo:150,hi:200,cat:'sierra'},
+    {label:'S. Sierra tilting 5–1.7 Ma [9,11]',lo:200,hi:450,cat:'sierra'},
+    {label:'Kern Arch post-slab detach. [10]',lo:1000,hi:1800,cat:'sierra'},
+    {label:'N. Sierra Quaternary [11]',lo:30,hi:100,cat:'sierra'},
+    {label:'N. Alpine foredeep [12]',lo:50,hi:200,cat:'other'},
+    {label:'Required for Parra et al. [13]',lo:51,hi:51,cat:'target'},
+    {label:'§8 Model: MdD predicted [M]',lo:Math.max(1,Math.min(modelMdd,modelMdd)),hi:Math.max(1,modelMdd),cat:'model'},
+    {label:'§8 Model: Fitz. predicted [M]',lo:Math.max(1,Math.min(modelFitz,modelFitz)),hi:Math.max(1,modelFitz),cat:'model'},
+  ];
+
+  const colors={
+    andes:'#0d9488',himalaya:'#2563eb',sierra:'#d97706',other:'#9c9a92',target:'#dc2626',model:'#7c3aed'
+  };
+
+  const labels=entries.map(e=>e.label);
+  const rangeData=entries.map(e=>[Math.max(e.lo,1),Math.max(e.hi,1)]);
+  const barBg=entries.map(e=>colors[e.cat]+'bb');
+  const barBd=entries.map(e=>colors[e.cat]);
+
+  if(compChart){compChart.destroy()}
+
+  const cvEl=document.getElementById('cv5');
+  compChart=new Chart(cvEl,{
+    type:'bar',
+    data:{
+      labels:labels,
+      datasets:[{
+        label:'Rate (m/Myr)',
+        data:rangeData,
+        backgroundColor:barBg,
+        borderColor:barBd,
+        borderWidth:1,
+        borderRadius:3,
+        borderSkipped:false,
+      }]
+    },
+    options:{
+      indexAxis:'y',
+      responsive:true,
+      maintainAspectRatio:false,
+      scales:{
+        x:{
+          type:'logarithmic',
+          title:{display:true,text:'Uplift / exhumation rate (m/Myr) — log scale',color:'#6b6a65',font:{size:12,family:'IBM Plex Sans'}},
+          ticks:{color:'#6b6a65',font:{size:11,family:'IBM Plex Mono'},callback:function(v){if([10,25,50,100,250,500,1000,2500,5000,10000].includes(v))return v.toLocaleString();return ''}},
+          grid:{color:'rgba(0,0,0,0.05)'},
+          min:10,max:15000,
+        },
+        y:{
+          ticks:{color:'#1a1a18',font:{size:11.5,family:'IBM Plex Sans'},autoSkip:false},
+          grid:{display:false},
+        }
+      },
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:function(ctx){const d=entries[ctx.dataIndex];if(d.lo===d.hi)return '~'+d.lo+' m/Myr ('+(d.lo/1000).toFixed(3)+' mm/yr)';return d.lo+'–'+d.hi.toLocaleString()+' m/Myr'}}}
+      },
+    },
+    plugins:[{
+      id:'targetLine9',
+      beforeDraw:function(chart){
+        const xs=chart.scales.x, ys=chart.scales.y, cx=chart.ctx;
+        const x51=xs.getPixelForValue(51);
+        cx.save();
+        cx.strokeStyle='#dc2626';cx.lineWidth=1.5;cx.setLineDash([6,4]);
+        cx.beginPath();cx.moveTo(x51,ys.top);cx.lineTo(x51,ys.bottom);cx.stroke();
+        cx.setLineDash([]);
+        cx.fillStyle='#dc2626';cx.font='11px IBM Plex Sans';cx.textAlign='left';
+        cx.fillText('~51 m/Myr required',x51+4,ys.top+12);
+        const x100=xs.getPixelForValue(100), x300=xs.getPixelForValue(300);
+        cx.fillStyle='rgba(13,148,136,0.08)';
+        cx.fillRect(x100,ys.top,x300-x100,ys.bottom-ys.top);
+        cx.restore();
+      }
+    }]
+  });
+}
+</script>
+</body>
+</html>

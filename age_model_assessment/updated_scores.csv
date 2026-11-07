@@ -1,0 +1,6 @@
+site,reversed_chron,age_top,age_base,sed_cm_Ma,pattern_misfit_cm,sec_top_Ma,sec_bot_Ma,palyno_ok,fossil_genus_ok,fossil_tight_ok
+SC,C5ABnr,13.608,13.739,328,43,13.29,14.08,True,False,False
+SC,C5AAnr,13.183,13.363,239,96,12.74,13.84,True,False,False
+SC,C5Ar.1nr,12.77,12.829,729,123,12.62,12.98,False,True,True
+SC,C5Ar.2nr,12.887,13.032,297,129,12.53,13.41,False,True,False
+SC,C5ACnr,14.07,14.163,462,168,13.84,14.41,False,False,False
