@@ -28,18 +28,19 @@ fig,ax=plt.subplots(figsize=(11.2,7.6))
 X0,X1=12.30,14.72
 ax.set_xlim(X0,X1); ax.set_ylim(-1.80,9.4); ax.axis("off")
 
-ax.axvspan(PALYNO[0],FOSSIL_CEIL,color=C_OK,alpha=0.07,zorder=0)
+ax.axvspan(PALYNO[0],FOSSIL_CEIL,ymin=0.17,ymax=0.97,color=C_OK,alpha=0.07,zorder=0)
 for x,c,lab in [(PALYNO[0],C_PAL,"pollen floor\n12.7 Ma"),
                 (PALYNO[1],C_PAL,"pollen ceiling\n14.2 Ma"),
                 (FOSSIL_CEIL,C_FOS,"$\\it{Purussaurus}$ ceiling\n13.8 Ma")]:
-    ax.axvline(x,color=c,lw=1.3,ls=(0,(5,3)),ymin=0.06,ymax=0.90,zorder=2)
+    ax.axvline(x,color=c,lw=1.3,ls=(0,(5,3)),ymin=0.18,ymax=0.90,zorder=2)
     ax.text(x,8.72,lab,color=c,fontsize=8.3,ha="center",va="bottom",weight="bold")
 
 ys,yh=7.55,0.60
 for nm,t,b,pol in GPTS:
+    if b<X0 or t>X1: continue
     fc="0.15" if pol=="N" else "white"
-    ax.add_patch(mpatches.Rectangle((t,ys),b-t,yh,facecolor=fc,edgecolor="0.15",lw=0.7,zorder=3))
-    if nm and pol=="N" and (b-t)>0.17:
+    ax.add_patch(mpatches.Rectangle((max(t,X0),ys),min(b,X1)-max(t,X0),yh,facecolor=fc,edgecolor="0.15",lw=0.7,zorder=3))
+    if nm and pol=="N" and (b-t)>0.17 and t>X0:
         ax.text((t+b)/2,ys+yh/2,nm,fontsize=7.0,ha="center",va="center",color="white",zorder=4)
     elif nm and pol=="N":
         ax.text((t+b)/2,ys+yh+0.14,nm,fontsize=6.8,ha="center",va="bottom",color="0.15")
