@@ -1,0 +1,6 @@
+chron,r_SC,ovr_Nup_kyr,ovr_Nlo_kyr,SC_rate_var_needed,r_TAM_min,TAM_ovr_at_rSC_kyr,SC_span,palyno_ok,fossil_ok,horizon_bracket
+C5Ar.2r,763,100,44,3.86,847,7,12.63-12.93,False,True,12.75-12.75
+C5Ar.3r,310,274,99,5.72,345,16,12.56-13.28,False,True,12.84-12.95
+C5AAr,250,261,65,2.73,278,20,12.77-13.67,True,True,13.12-13.28
+C5ABr,344,55,0,1.22,382,15,13.31-13.96,True,False,13.56-13.66
+C5ACr,484,0,0,0.64,538,10,13.86-14.32,False,False,14.04-14.08
