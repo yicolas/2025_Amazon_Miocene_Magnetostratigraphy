@@ -1,22 +1,32 @@
-\documentclass[11pt]{article}
+\documentclass[12pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{natbib}
 \usepackage{graphicx}
 \usepackage{times}
+\usepackage{helvet}
+\usepackage{xcolor}
+\usepackage{titlesec}
 \usepackage{setspace}
+\definecolor{leadhead}{HTML}{4F81BD}
+\definecolor{leadtitle}{HTML}{345A8A}
+\titleformat{\section}{\sffamily\bfseries\fontsize{16}{19}\selectfont\color{leadhead}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\sffamily\bfseries\fontsize{14}{17}\selectfont\color{leadhead}}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{14pt}{6pt}
 \setcitestyle{authoryear,round}
-\renewcommand{\refname}{\normalsize REFERENCES CITED}
-\title{\vspace{-2em}\textbf{Middle Miocene magnetostratigraphy of the Pebas Formation at
-Tamshiyacu and Santa Carina (Iquitos, Peru): a C5AAr ($\sim$13.2--13.4 Ma) tie for
-the Pan-Amazonian wetland and its \textit{Purussaurus} record}}
-\date{}
-\author{N.\ Anderson and co-authors\\
-\small \textit{[affiliations]}\\
-\small Corresponding author: nickstephann@gmail.com}
-
+\renewcommand{\refname}{References}
 \begin{document}
-\maketitle
-\vspace{-2.5em}
+\begin{flushleft}
+{\color{leadtitle}\sffamily\bfseries\fontsize{17}{21}\selectfont Middle Miocene
+magnetostratigraphy of the Pebas Formation at Tamshiyacu and Santa Carina (Iquitos, Peru):
+a C5AAr ($\sim$13.2--13.4 Ma) tie for the Pan-Amazonian wetland and its
+\textit{Purussaurus} record\par}
+\vspace{8pt}
+Nicolas Anderson$^{1,*}$, Julia V.\ Tejada$^{1}$, Joseph L.\ Kirschvink$^{1}$, and
+co-authors \textit{[list in progress]}\\[3pt]
+{\small $^{1}$Division of Geological and Planetary Sciences, California Institute of
+Technology, Pasadena, CA 91125, USA}\\[2pt]
+{\small $^{*}$Corresponding author: nickanderson@caltech.edu}
+\end{flushleft}
 
 \begin{center}\fbox{\parbox{0.94\textwidth}{\small\textbf{Working draft (Nov.\ 2026).}
 The GPTS correlation below rests on the biostratigraphic exclusion test of Fig.~3;
@@ -51,7 +61,7 @@ These records provide the first direct GPTS calibration of the Pebas at Iquitos 
 chronologic bridge to the La Venta fauna.
 \end{abstract}
 
-\section*{INTRODUCTION}
+\section*{Introduction}
 The Miocene reorganization of northern South America --- Andean uplift, the Pebas
 mega-wetland, and the eventual birth of the transcontinental Amazon --- is central to
 Neotropical biogeography \citep{Hoorn2010,Wesselingh2006}. The formation's lignites and
@@ -78,7 +88,7 @@ sections are the same cutbanks --- Tamshiyacu and Santa Julia II (here ``Santa C
 whose ichnology first argued for tidal influence \citep{Gingras2002}, allowing our
 magnetostratigraphy to be read directly against an established facies and process model.
 
-\section*{GEOLOGIC SETTING AND METHODS}
+\section*{Geologic setting and methods}
 The Pebas Formation ($\approx$Solim\~oes Fm.\ of Brazil) accumulated in the Andean
 foreland/back-arc of western Amazonia during the middle Miocene, as a low-gradient system
 of shallow lakes, swamps, and floodplains periodically connected to the sea
@@ -114,7 +124,7 @@ $\phi = 0.30$--$0.45$ appropriate to lithified mudstone at the Pebas burial dept
 \citep{SclaterChristie1980}, giving a decompaction factor of $\sim$2--3. Compacted (measured)
 rates are reported alongside the decompacted values.
 
-\section*{RESULTS}
+\section*{Results}
 \textbf{Polarity records.} Each section preserves shallow, dual-polarity ChRM directions
 and a single robust reversal. Tamshiyacu is normal-below, reversed-above; Santa Carina is
 normal--reversed--normal. At each reversal the inclination changes sign in step with a
@@ -150,7 +160,7 @@ authigenic, held in pyrite and carbonate (Fig.~2). Discrete S--Fe--Ca-enriched i
 mark reducing, shell-bearing horizons; intervening beds are more oxidized and
 detritally-diluted.
 
-\section*{DISCUSSION}
+\section*{Discussion}
 \textbf{Age.} Four convergent constraints --- not all fully independent, since the
 \textit{Purussaurus} ceiling and the La Venta U--Pb model are interlinked through the Honda
 Group --- point to chron C5AAr, $\sim$13.2--13.4 Ma:
@@ -193,7 +203,8 @@ ceiling (implied section base 13.84 Ma), and C5ABr actually matches the polarity
 thicknesses better under uniform accumulation, failing only the fossil constraint. The
 detrital-zircon U--Pb maximum depositional ages now in analysis (five samples from
 Tamshiyacu, Santa Carina, and Ave Mar\'ia) provide the independent, biostratigraphy-free
-test: a youngest-grain population of $\sim$13.4--13.6 Ma would exclude C5ABr outright,
+test --- indeed the only one available, since radiocarbon, OSL, and cosmogenic methods all
+expire long before the middle Miocene (Fig.~6): a youngest-grain population of $\sim$13.4--13.6 Ma would exclude C5ABr outright,
 whereas one younger than $\sim$13.2 Ma would falsify C5AAr itself. The same data will
 anchor the Iquitos sections to the identical U--Pb systematics that calibrate the La Venta
 composite \citep{MoraRojas2023}, so the Pebas--La Venta comparison in Fig.~2 becomes
@@ -242,7 +253,7 @@ below the astronomically tuned Ceara Rise carbonates downstream in the equatoria
 $\sim$13 Ma is therefore expected, and the condensation is a depositional signal, not a
 correlation artifact.
 
-\section*{CONCLUSIONS}
+\section*{Conclusions}
 Paleomagnetic records from Tamshiyacu and Santa Carina provide the first direct GPTS
 calibration of the Pebas Formation at Iquitos. Both sections share the C5ABn--C5AAr
 reversal, and four convergent constraints place the studied interval in chron C5AAr,
@@ -258,7 +269,7 @@ fauna into a sub-million-year chronologic framework --- resolution suitable for 
 Neotropical evolutionary and biogeographic models, and a template for dating the many other
 fossiliferous Pebas cutbanks that at present lack direct GPTS control.
 
-\section*{ACKNOWLEDGMENTS}
+\section*{Acknowledgments}
 \small [Funding; field and laboratory assistance; OSU paleomagnetism facility;
 \textit{Purussaurus} identification (Antoine, pers.\ comm.).]
 
@@ -326,7 +337,7 @@ p.~439--458.
 \end{thebibliography}
 
 \clearpage
-\section*{FIGURE CAPTIONS}
+\section*{Figure captions}
 \textbf{Figure 1.} Location of the Tamshiyacu (TAM) and Santa Carina (SC) sections along
 the Amazon River near Iquitos, Peru, with the regional Miocene localities La Venta and
 Contamana and the approximate extent of the Pebas mega-wetland. Political boundaries and
@@ -380,6 +391,13 @@ horizon dates to $\sim$13.1--13.4 Ma, consistent with the Monte Carlo estimate o
 (95\% CI 13.04--13.35 Ma). Exclusions carry over from Fig.~3; the detrital-zircon maximum
 depositional ages, tied into the La Venta U--Pb age model, will tighten both panels.
 
+\textbf{Figure 6.} \textit{(Working figure.)} Applicable age ranges of common
+geochronometers against the Pebas target interval (13.18--13.36 Ma, red). Radiocarbon, OSL,
+and cosmogenic $^{10}$Be/$^{26}$Al all expire well before the middle Miocene (red crosses);
+only magnetostratigraphy (with an independent anchor) and detrital-zircon U--Pb reach the
+Pebas, motivating the U--Pb maximum depositional ages now in analysis. Method limits are
+approximate and will be refined.
+
 \clearpage
 \begin{figure}[t]\centering\includegraphics[width=\textwidth]{figs/fig1_location.png}\end{figure}
 \begin{figure*}[t]\centering\includegraphics[width=\textwidth]{figs/fig2_master.png}\end{figure*}
@@ -389,5 +407,6 @@ depositional ages, tied into the La Venta U--Pb age model, will tighten both pan
 \includegraphics[width=0.92\textwidth]{figs/fig_alternatives_TAM_compacted.png}\\[6pt]
 \includegraphics[width=0.92\textwidth]{figs/fig_alternatives_TAM_decompacted.png}
 \end{figure}
+\begin{figure}[t]\centering\includegraphics[width=0.95\textwidth]{figs/fig6_method_ranges.png}\end{figure}
 
 \end{document}

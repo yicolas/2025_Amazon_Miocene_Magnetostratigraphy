@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.10.21)  9 NOV 2026 16:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.10.21)  9 NOV 2026 16:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-01-21>
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count185
 \c@section=\count186
@@ -79,6 +79,38 @@ File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty
 Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
 )
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/helvet.sty
+Package: helvet 2020/03/25 PSNFSS-v9.3 (WaS) 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 227.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2021/07/05 v2.14 Sectioning titles
+\ttl@box=\box50
+\beforetitleunit=\skip51
+\aftertitleunit=\skip52
+\ttl@plus=\dimen149
+\ttl@minus=\dimen150
+\ttl@toksa=\toks18
+\titlewidth=\dimen151
+\titlewidthlast=\dimen152
+\titlewidthfirst=\dimen153
+)
 (/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
@@ -91,7 +123,7 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count197
-\l__pdf_internal_box=\box50
+\l__pdf_internal_box=\box51
 )
 (./pebas_geology_short.aux)
 \openout1 = `pebas_geology_short.aux'.
@@ -130,12 +162,12 @@ LaTeX Font Info:    ... okay on input line 17.
 * \topmargin=-37.0pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=11.0pt
+* \topskip=12.0pt
 * \footskip=30.0pt
-* \marginparwidth=59.0pt
+* \marginparwidth=44.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -148,16 +180,16 @@ LaTeX Font Info:    ... okay on input line 17.
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count198
-\scratchdimen=\dimen149
-\scratchbox=\box51
+\scratchdimen=\dimen154
+\scratchbox=\box52
 \nofMPsegments=\count199
 \nofMParguments=\count266
-\everyMPshowfont=\toks18
+\everyMPshowfont=\toks19
 \MPscratchCnt=\count267
-\MPscratchDim=\dimen150
+\MPscratchDim=\dimen155
 \MPnumerator=\count268
 \makeMPintoPDFobject=\count269
-\everyMPtoPDFconversion=\toks19
+\everyMPtoPDFconversion=\toks20
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -167,91 +199,126 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <17.28> on input line 18.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 18.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 18.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 18.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 25.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 32.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 32.
+LaTeX Font Info:    Trying to load font information for OT1+phv on input line 1
+9.
 
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
+File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
+)
+LaTeX Font Info:    Calculating math sizes for size <17> on input line 21.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <8.5> not available
+(Font)              size <8> substituted on input line 21.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <8.5> not available
+(Font)              size <8> substituted on input line 21.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <8.5> not available
+(Font)              size <8> substituted on input line 21.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <17> on input line 21.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <11.89995> on input line 21.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8.5> on input line 21.
+LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <17> not available
+(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 22.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 24.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 24.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 24.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 26.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
-01.
+11.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [2] [3] [4] [5]
-[6] [7
+[6] [7] [8
 
 ]
-<figs/fig1_location.png, id=35, 496.13354pt x 355.92975pt>
+<figs/fig1_location.png, id=42, 496.13354pt x 355.92975pt>
 File: figs/fig1_location.png Graphic file (type png)
 <use figs/fig1_location.png>
-Package pdftex.def Info: figs/fig1_location.png  used on input line 384.
+Package pdftex.def Info: figs/fig1_location.png  used on input line 402.
 (pdftex.def)             Requested size: 469.75502pt x 337.00711pt.
-<figs/fig2_master.png, id=37, 986.4855pt x 1073.9322pt>
+<figs/fig2_master.png, id=44, 986.4855pt x 1073.9322pt>
 File: figs/fig2_master.png Graphic file (type png)
 <use figs/fig2_master.png>
-Package pdftex.def Info: figs/fig2_master.png  used on input line 385.
+Package pdftex.def Info: figs/fig2_master.png  used on input line 403.
 (pdftex.def)             Requested size: 469.75502pt x 511.40128pt.
-<figs/fig_alternatives.png, id=38, 801.32976pt x 542.31409pt>
+<figs/fig_alternatives.png, id=45, 801.32976pt x 542.31409pt>
 File: figs/fig_alternatives.png Graphic file (type png)
 <use figs/fig_alternatives.png>
-Package pdftex.def Info: figs/fig_alternatives.png  used on input line 386.
+Package pdftex.def Info: figs/fig_alternatives.png  used on input line 404.
 (pdftex.def)             Requested size: 469.75502pt x 317.9186pt.
-<figs/fig4_sedrate.png, id=39, 714.19765pt x 385.15659pt>
+<figs/fig4_sedrate.png, id=46, 714.19765pt x 385.15659pt>
 File: figs/fig4_sedrate.png Graphic file (type png)
 <use figs/fig4_sedrate.png>
-Package pdftex.def Info: figs/fig4_sedrate.png  used on input line 387.
+Package pdftex.def Info: figs/fig4_sedrate.png  used on input line 405.
 (pdftex.def)             Requested size: 469.75502pt x 253.33434pt.
-<figs/fig_alternatives_TAM_compacted.png, id=40, 801.32976pt x 541.44684pt>
+<figs/fig_alternatives_TAM_compacted.png, id=47, 801.32976pt x 541.44684pt>
 File: figs/fig_alternatives_TAM_compacted.png Graphic file (type png)
 <use figs/fig_alternatives_TAM_compacted.png>
 Package pdftex.def Info: figs/fig_alternatives_TAM_compacted.png  used on input
- line 389.
+ line 407.
 (pdftex.def)             Requested size: 432.17375pt x 292.01341pt.
-<figs/fig_alternatives_TAM_decompacted.png, id=41, 801.32976pt x 541.44684pt>
+<figs/fig_alternatives_TAM_decompacted.png, id=48, 801.32976pt x 541.44684pt>
 File: figs/fig_alternatives_TAM_decompacted.png Graphic file (type png)
 <use figs/fig_alternatives_TAM_decompacted.png>
 Package pdftex.def Info: figs/fig_alternatives_TAM_decompacted.png  used on inp
-ut line 390.
+ut line 408.
 (pdftex.def)             Requested size: 432.17375pt x 292.01341pt.
- [8 <./figs/fig1_location.png>] [9 <./figs/fig2_master.png>] [10 <./figs/fig_al
-ternatives.png> <./figs/fig4_sedrate.png>] [11 <./figs/fig_alternatives_TAM_com
-pacted.png> <./figs/fig_alternatives_TAM_decompacted.png>]
-(./pebas_geology_short.aux) ) 
+<figs/fig6_method_ranges.png, id=49, 750.45168pt x 336.7782pt>
+File: figs/fig6_method_ranges.png Graphic file (type png)
+<use figs/fig6_method_ranges.png>
+Package pdftex.def Info: figs/fig6_method_ranges.png  used on input line 410.
+(pdftex.def)             Requested size: 446.26582pt x 200.26988pt.
+ [9 <./figs/fig1_location.png>] [10 <./figs/fig2_master.png>]
+[11 <./figs/fig_alternatives.png> <./figs/fig4_sedrate.png>] [12 <./figs/fig_al
+ternatives_TAM_compacted.png> <./figs/fig_alternatives_TAM_decompacted.png>]
+[13 <./figs/fig6_method_ranges.png>] (./pebas_geology_short.aux)
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 0.5pt have occurred.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2455 strings out of 480247
- 39489 string characters out of 5896150
- 338399 words of memory out of 5000000
- 20385 multiletter control sequences out of 15000+600000
- 492125 words of font info for 69 fonts, out of 8000000 for 9000
+ 3332 strings out of 480247
+ 51101 string characters out of 5896150
+ 354423 words of memory out of 5000000
+ 21243 multiletter control sequences out of 15000+600000
+ 491954 words of font info for 69 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 55i,7n,62p,214b,283s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/bas
-e/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf
--dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
-utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on pebas_geology_short.pdf (11 pages, 2109850 bytes).
+ 55i,6n,62p,214b,281s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+y8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
+rw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on pebas_geology_short.pdf (13 pages, 2279996 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
- 58 compressed objects within 1 object stream
+ 133 PDF objects out of 1000 (max. 8388607)
+ 75 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
